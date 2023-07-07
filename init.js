@@ -64,32 +64,54 @@ const placeApple = function() {
   appleDiv.classList.add("apple");
 };
 
+// snake body - the head is part of it
+let body = [
+  {...headPos}
+];
+
 // game mechanics (moving)
 const mechanics = function(e) {
-  let clearAndReselect = function() {
+  let checkWhatHappens = function() {
+    // check if player doesn't go out of the board
     if (headPos.x <= 0 || headPos.x > xMax || headPos.y <= 0 || headPos.y > yMax) {
       alert('dead');
     };
 
+    // erase head from previous place
     headDiv.className = '';
+    // set new place of the head and start to adjust body
     headDiv = divSelector(headPos);
+    body.unshift({...headPos});
+    if (body[1]) {
+      divSelector(body[1]).classList.add("body");
+    };
+    // check if snake eats an apple
+    if (appleDiv === headDiv) {
+      // place an apple in new position
+      placeApple();
+      // after that clear the class of eaten apple,
+      // so the new one won't appear in the same place
+      headDiv.className = '';
+    } else {
+      divSelector(body.pop()).className = '';
+    };
   };
 
   if (e.key === "ArrowLeft") {
     headPos.x--;
-    clearAndReselect();
+    checkWhatHappens();
     headDiv.classList.add("head-left");
   } else if (e.key === "ArrowRight") {
     headPos.x++;
-    clearAndReselect();
+    checkWhatHappens();
     headDiv.classList.add("head-right");
   } else if (e.key === "ArrowUp") {
     headPos.y--;
-    clearAndReselect();
+    checkWhatHappens();
     headDiv.classList.add("head-up");
   } else if (e.key === "ArrowDown") {
     headPos.y++;
-    clearAndReselect();
+    checkWhatHappens();
     headDiv.classList.add("head-down");
   };
 };

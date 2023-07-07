@@ -42,3 +42,7 @@
   background-image: url("./assets/apple.png");
   background-size: cover;
 }
+.body {
+  background-image: url("./assets/body.png");
+  background-size: cover;
+}
