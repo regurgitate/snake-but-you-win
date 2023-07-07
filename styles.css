@@ -38,3 +38,7 @@
   background-size: cover;
   transform: rotate(270deg);
 }
+.apple {
+  background-image: url("./assets/apple.png");
+  background-size: cover;
+}
