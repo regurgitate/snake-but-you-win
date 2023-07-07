@@ -19,7 +19,22 @@
   grid-template-columns: repeat(30, 1fr); /* Create 10 equal-width columns */
   grid-template-rows: repeat(30, 1fr); /* Create 10 equal-height rows */
 }
-.head-left {
-  background-image: url("./assets/snake-head-left.png");
+.head-down {
+  background-image: url("./assets/snake-head.png");
   background-size: cover;
+}
+.head-left {
+  background-image: url("./assets/snake-head.png");
+  background-size: cover;
+  transform: rotate(90deg);
+}
+.head-up {
+  background-image: url("./assets/snake-head.png");
+  background-size: cover;
+  transform: rotate(180deg);
+}
+.head-right {
+  background-image: url("./assets/snake-head.png");
+  background-size: cover;
+  transform: rotate(270deg);
 }
