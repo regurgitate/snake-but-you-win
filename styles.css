@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+}
+.game {
+  border: 2px solid black;
+  height: 96vh;
+  width: 96vh;
+  display: grid;
+  grid-template-columns: repeat(30, 1fr); /* Create 10 equal-width columns */
+  grid-template-rows: repeat(30, 1fr); /* Create 10 equal-height rows */
+}
+.head-left {
+  background-image: url("./assets/snake-head-left.png");
+  background-size: cover;
+}

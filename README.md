@@ -1,0 +1,1 @@
+Simple game created to practice and showcase js skills.
