@@ -72,9 +72,18 @@ let body = [
 // game mechanics (moving)
 const mechanics = function(e) {
   let checkWhatHappens = function() {
-    // check if player doesn't go out of the board
-    if (headPos.x <= 0 || headPos.x > xMax || headPos.y <= 0 || headPos.y > yMax) {
+    const youAreDead = function() {
       alert('dead');
+      document.removeEventListener('keydown', mechanics);
+    };
+
+    // check if snake doesn't go out of the board
+    if (headPos.x <= 0 || headPos.x > xMax || headPos.y <= 0 || headPos.y > yMax) {
+      youAreDead();
+    };
+    // check if snake doesn't go into it's body
+    if (body.filter(el => el.x === headPos.x && el.y === headPos.y).length) {
+      youAreDead();
     };
 
     // erase head from previous place
