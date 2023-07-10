@@ -16,33 +16,31 @@
   height: 96vh;
   width: 96vh;
   display: grid;
-  grid-template-columns: repeat(30, 1fr); /* Create 10 equal-width columns */
-  grid-template-rows: repeat(30, 1fr); /* Create 10 equal-height rows */
+  grid-template-columns: repeat(30, 1fr); /* Create equal-width columns */
+  grid-template-rows: repeat(30, 1fr); /* Create equal-height rows */
 }
-.head-down {
+.head {
   background-image: url("./assets/snake-head.png");
   background-size: cover;
 }
-.head-left {
-  background-image: url("./assets/snake-head.png");
-  background-size: cover;
+.rotate {
   transform: rotate(90deg);
 }
-.head-up {
-  background-image: url("./assets/snake-head.png");
-  background-size: cover;
+.rotate-twice {
   transform: rotate(180deg);
 }
-.head-right {
-  background-image: url("./assets/snake-head.png");
-  background-size: cover;
+.rotate-thrice {
   transform: rotate(270deg);
 }
 .apple {
   background-image: url("./assets/apple.png");
   background-size: cover;
 }
-.body {
-  background-image: url("./assets/body.png");
+.body-middle {
+  background-image: url("./assets/body-straight.png");
+  background-size: cover;
+}
+.body-end {
+  background-image: url("./assets/body-end.png");
   background-size: cover;
 }

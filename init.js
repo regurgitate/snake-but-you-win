@@ -1,8 +1,10 @@
 const game = document.querySelector('.game');
 
 // board size
-const xMax = 30;
-const yMax = 30;
+const xMax = 5;
+const yMax = 5;
+game.style.gridTemplateColumns = `repeat(${xMax}, 1fr)`;
+game.style.gridTemplateRows = `repeat(${xMax}, 1fr)`;
 
 // determining starting point (center of the board)
 let startingPoint = {};
@@ -34,7 +36,7 @@ const divSelector = function(object) {
 };
 
 let headDiv = divSelector(startingPoint);
-headDiv.classList.add("head-down");
+headDiv.classList.add("head");
 let headPos = {...startingPoint};
 
 // placing an apple
@@ -85,15 +87,18 @@ const mechanics = function(e) {
     if (body.filter(el => el.x === headPos.x && el.y === headPos.y).length) {
       youAreDead();
     };
+    // check if you win
+    if (body.length === xMax * yMax) {
+      alert('Congratulations, you win');
+    };
 
     // erase head from previous place
     headDiv.className = '';
-    // set new place of the head and start to adjust body
+    // set new place of the head
     headDiv = divSelector(headPos);
+    // start to adjust body
     body.unshift({...headPos});
-    if (body[1]) {
-      divSelector(body[1]).classList.add("body");
-    };
+
     // check if snake eats an apple
     if (appleDiv === headDiv) {
       // place an apple in new position
@@ -104,24 +109,52 @@ const mechanics = function(e) {
     } else {
       divSelector(body.pop()).className = '';
     };
+
+    // check if body (beside head) already exists
+    if (body[1]) {
+      // check where is the head to adjust image
+      if (headPos.y === body[1].y) {
+        if (headPos.x < body[1].x) {
+          divSelector(body[1]).classList.add("rotate-thrice");
+        } else {
+          divSelector(body[1]).classList.add("rotate");
+        }
+      } else {
+        if (headPos.y > body[1].y) {
+          divSelector(body[1]).classList.add("rotate-twice");
+        };
+      };
+      // check if it's one block long or longer - different image to be used
+      if (body[2]) {
+        // middle of the body
+        divSelector(body[1]).classList.add("body-middle");
+      } else {
+        // end of the body
+        divSelector(body[1]).classList.add("body-end");
+      };
+    };
   };
 
   if (e.key === "ArrowLeft") {
     headPos.x--;
     checkWhatHappens();
-    headDiv.classList.add("head-left");
+    // head left
+    headDiv.classList.add("head", "rotate");
   } else if (e.key === "ArrowRight") {
     headPos.x++;
     checkWhatHappens();
-    headDiv.classList.add("head-right");
+    // head right
+    headDiv.classList.add("head", "rotate-thrice");
   } else if (e.key === "ArrowUp") {
     headPos.y--;
     checkWhatHappens();
-    headDiv.classList.add("head-up");
+    // head up
+    headDiv.classList.add("head", "rotate-twice");
   } else if (e.key === "ArrowDown") {
     headPos.y++;
     checkWhatHappens();
-    headDiv.classList.add("head-down");
+    // head down
+    headDiv.classList.add("head");
   };
 };
 
