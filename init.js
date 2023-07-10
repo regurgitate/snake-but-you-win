@@ -70,14 +70,17 @@ const placeApple = function() {
 let body = [
   {...headPos}
 ];
+let points = 0;
 
 // game mechanics (moving)
 const mechanics = function(e) {
-  let checkWhatHappens = function() {
+  const checkWhatHappens = function() {
     const youAreDead = function() {
       alert('dead');
       document.removeEventListener('keydown', mechanics);
     };
+    const score = document.getElementById('score');
+    score.innerHTML = ++points;
 
     // set new place of the head
     headDiv = divSelector(headPos);
@@ -90,6 +93,7 @@ const mechanics = function(e) {
       if (body.length === xMax * yMax) {
         alert('Congratulations, you win');
         document.removeEventListener('keydown', mechanics);
+        score.style.color = 'black';
       } else {
         // if you didn't win yet, place an apple in new position
         placeApple();
