@@ -79,34 +79,25 @@ const mechanics = function(e) {
       document.removeEventListener('keydown', mechanics);
     };
 
-    // check if snake doesn't go out of the board
-    if (headPos.x <= 0 || headPos.x > xMax || headPos.y <= 0 || headPos.y > yMax) {
-      youAreDead();
-    };
-    // check if snake doesn't go into it's body
-    if (body.filter(el => el.x === headPos.x && el.y === headPos.y).length) {
-      youAreDead();
-    };
-    // check if you win
-    if (body.length === xMax * yMax) {
-      alert('Congratulations, you win');
-    };
-
-    // erase head from previous place
-    headDiv.className = '';
     // set new place of the head
     headDiv = divSelector(headPos);
-    // start to adjust body
+    // add new coordinates for a body part
     body.unshift({...headPos});
 
     // check if snake eats an apple
     if (appleDiv === headDiv) {
-      // place an apple in new position
-      placeApple();
-      // after that clear the class of eaten apple,
-      // so the new one won't appear in the same place
+      // check if you win
+      if (body.length === xMax * yMax) {
+        alert('Congratulations, you win');
+        document.removeEventListener('keydown', mechanics);
+      } else {
+        // if you didn't win yet, place an apple in new position
+        placeApple();
+      };
+      // clear the class of eaten apple,
       headDiv.className = '';
     } else {
+      // delete the last part of the body if the apple was not eaten
       divSelector(body.pop()).className = '';
     };
 
@@ -181,6 +172,17 @@ const mechanics = function(e) {
           };
         }
       };
+    };
+
+    // check if snake doesn't go out of the board
+    if (headPos.x <= 0 || headPos.x > xMax || headPos.y <= 0 || headPos.y > yMax) {
+      youAreDead();
+    };
+    // check if snake doesn't go into it's body;
+    // slice(1) is for not considering new head position
+    // (otherwise you would die in every single move)
+    if (body.slice(1).filter(el => el.x === headPos.x && el.y === headPos.y).length) {
+      youAreDead();
     };
   };
 
