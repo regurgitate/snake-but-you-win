@@ -112,25 +112,74 @@ const mechanics = function(e) {
 
     // check if body (beside head) already exists
     if (body[1]) {
-      // check where is the head to adjust image
-      if (headPos.y === body[1].y) {
-        if (headPos.x < body[1].x) {
-          divSelector(body[1]).classList.add("rotate-thrice");
+      // select the correct image for each part of the body along with rotation
+      for (let i = 1; i < body.length; i++) {
+        divSelector(body[i]).className = '';
+        // image selection
+        if (i === body.length - 1) {
+          divSelector(body[i]).classList.add("body-end");
+          // rotation for body end
+          if (body[i].x === body[i - 1].x) {
+            if (body[i].y < body[i - 1].y) {
+              divSelector(body[i]).classList.add("rotate-twice");
+            };
+          } else {
+            if (body[i].x < body[i - 1].x) {
+              divSelector(body[i]).classList.add("rotate");
+            } else {
+              divSelector(body[i]).classList.add("rotate-thrice");
+            };
+          };
+        } else if (body[i].x === body[i - 1].x && body[i].x === body[i + 1].x) {
+          // rotation taking into consideration right away
+          divSelector(body[i]).classList.add("body-straight");
+        } else if (body[i].y === body[i - 1].y && body[i].y === body[i + 1].y) {
+          // rotation taking into consideration right away
+          divSelector(body[i]).classList.add("body-straight", "rotate");
         } else {
-          divSelector(body[1]).classList.add("rotate");
+          divSelector(body[i]).classList.add("body-turn");
+          // rotation for body turn
+          if (
+            (
+              body[i - 1].x < body[i + 1].x &&
+              body[i - 1].y < body[i + 1].y &&
+              body[i - 1].y === body[i].y
+            ) ||
+            (
+              body[i - 1].x > body[i + 1].x &&
+              body[i - 1].y > body[i + 1].y &&
+              body[i - 1].x === body[i].x
+            )
+          ) {
+            divSelector(body[i]).classList.add("rotate");
+          } else if (
+            (
+              body[i - 1].x < body[i + 1].x &&
+              body[i - 1].y > body[i + 1].y &&
+              body[i - 1].y === body[i].y
+            ) ||
+            (
+              body[i - 1].x > body[i + 1].x &&
+              body[i - 1].y < body[i + 1].y &&
+              body[i - 1].x === body[i].x
+            )
+          ) {
+            divSelector(body[i]).classList.add("rotate-twice");
+          } else if (
+            (
+              body[i - 1].x < body[i + 1].x &&
+              body[i - 1].y < body[i + 1].y &&
+              body[i - 1].x === body[i].x
+            ) ||
+            (
+              body[i - 1].x > body[i + 1].x &&
+              body[i - 1].y > body[i + 1].y &&
+              body[i - 1].y === body[i].y
+            )
+          ) {
+            divSelector(body[i]).classList.add("rotate-thrice");
+          };
         }
-      } else {
-        if (headPos.y > body[1].y) {
-          divSelector(body[1]).classList.add("rotate-twice");
-        };
-      };
-      // check if it's one block long or longer - different image to be used
-      if (body[2]) {
-        // middle of the body
-        divSelector(body[1]).classList.add("body-middle");
-      } else {
-        // end of the body
-        divSelector(body[1]).classList.add("body-end");
       };
     };
   };

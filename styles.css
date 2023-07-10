@@ -36,11 +36,15 @@
   background-image: url("./assets/apple.png");
   background-size: cover;
 }
-.body-middle {
+.body-straight {
   background-image: url("./assets/body-straight.png");
   background-size: cover;
 }
 .body-end {
   background-image: url("./assets/body-end.png");
+  background-size: cover;
+}
+.body-turn {
+  background-image: url("./assets/body-turn.png");
   background-size: cover;
 }
