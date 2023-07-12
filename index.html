@@ -12,11 +12,21 @@
     <div class="game"></div>
     <div class="side">
       <div class="options">
-        Your Score:<br>
-        (the fewer, the better)
-        <div id="score">0</div>
+        <div>
+          Your Score:<br>
+          (the fewer, the better)
+          <div id="score">0</div>
+        </div>
+        <form class="form">
+          <span class="title">Board size:</span><br>
+          <label for="x">x</label>
+          <input type="number" id="x" value="30" name="x"><br>
+          <label for="y">y</label>
+          <input type="number" id="y" value="30" name="y"><br>
+          <button>Restart the game</button>
+        </form>
       </div>
-      <div class="copyrights">
+      <div>
         © Krzysztof Olejnik 2023
       </div>
     </div>
