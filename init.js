@@ -1,5 +1,9 @@
 const playGame = function(x, y) { // x, y - board size
   const game = document.querySelector('.game');
+  const scoreMoves = document.getElementById('score-moves');
+  const scoreApples = document.getElementById('score-apples');
+  scoreMoves.innerHTML = "0";
+  scoreApples.innerHTML = "0";
 
   game.style.gridTemplateColumns = `repeat(${x}, 1fr)`;
   game.style.gridTemplateRows = `repeat(${y}, 1fr)`;
@@ -9,9 +13,9 @@ const playGame = function(x, y) { // x, y - board size
 
   function determStartPoint(value, dim) {
     if (value % 2 === 0) {
-      startingPoint[dim] = value / 2;
+      startingPoint[dim] = +value / 2;
     } else {
-      startingPoint[dim] = (value + 1) / 2;
+      startingPoint[dim] = (+value + 1) / 2;
     }
   };
 
@@ -69,7 +73,8 @@ const playGame = function(x, y) { // x, y - board size
   let body = [
     {...headPos}
   ];
-  let points = 0;
+  let pointsMoves = 0;
+  let pointsApples = 0;
 
   // game mechanics
   mechanics = function(e) {
@@ -80,8 +85,7 @@ const playGame = function(x, y) { // x, y - board size
         document.removeEventListener('keydown', mechanics);
         alive = false;
       };
-      const score = document.getElementById('score');
-      score.innerHTML = ++points;
+      scoreMoves.innerHTML = ++pointsMoves;
 
       // set new place of the head
       headDiv = divSelector(headPos);
@@ -90,11 +94,11 @@ const playGame = function(x, y) { // x, y - board size
 
       // check if snake eats an apple
       if (appleDiv === headDiv) {
+        scoreApples.innerHTML = ++pointsApples;
         // check if you win
         if (body.length === x * y) {
           alert('Congratulations, you win');
           document.removeEventListener('keydown', mechanics);
-          score.style.color = 'black';
         } else {
           // if you didn't win yet, place an apple in new position
           placeApple();

@@ -20,6 +20,12 @@
   grid-template-columns: repeat(30, 1fr); /* Create equal-width columns */
   grid-template-rows: repeat(30, 1fr); /* Create equal-height rows */
 }
+.scores {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 40px;
+}
 .side {
   display: flex;
   flex-direction: column;
@@ -41,13 +47,13 @@ input {
 button {
   margin-top: 20px;
 }
-.options {
+.options-and-scores {
   text-align: center;
 }
-#score {
+#score-moves, #score-apples {
   font-weight: bold;
   font-size: 2em;
-  color: lightgray;
+  color: black;
 }
 .head {
   background-image: url("./assets/snake-head.png");
