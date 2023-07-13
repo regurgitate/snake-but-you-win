@@ -5,8 +5,16 @@ const playGame = function(x, y) { // x, y - board size
   scoreMoves.innerHTML = "0";
   scoreApples.innerHTML = "0";
 
+  // adjust board size
   game.style.gridTemplateColumns = `repeat(${x}, 1fr)`;
   game.style.gridTemplateRows = `repeat(${y}, 1fr)`;
+  if (+x >= +y) {
+    game.style.width = 96 + 'vh';
+    game.style.height = 96 * (y / x) + 'vh';
+  } else {
+    game.style.height = 96 + 'vh';
+    game.style.width = 96 * (x / y) + 'vh';
+  }
 
   // determining starting point (center of the board)
   let startingPoint = {};
@@ -24,8 +32,8 @@ const playGame = function(x, y) { // x, y - board size
 
   // setting up the board
   game.innerHTML = '';
-  for (let i = 1; i <= x; i++) {
-    for (let j = 1; j <= y; j++) {
+  for (let i = 1; i <= y; i++) {
+    for (let j = 1; j <= x; j++) {
       const div = document.createElement("div");
       div.setAttribute("data-x", j);
       div.setAttribute("data-y", i);
@@ -236,10 +244,21 @@ const playGame = function(x, y) { // x, y - board size
   return removeListener;
 };
 
-let removeListener = playGame(5, 5);
+let removeListener = playGame(30, 30);
 const form = document.querySelector("form");
 form.addEventListener('submit', e => {
   e.preventDefault();
+  let x = form.elements.x.value;
+  let y = form.elements.y.value;
+  let errorDiv = document.getElementsByClassName('error')[0];
+  if (x === "1" && y === "1") {
+    errorDiv.innerHTML = "The board is too small";
+    return;
+  } else if (+x > 200 || +y > 200) {
+    errorDiv.innerHTML = "The board is too big (max is 200 x 200)";
+    return;
+  };
+  errorDiv.innerHTML = "";
   removeListener();
-  removeListener = playGame(form.elements.x.value, form.elements.y.value);
+  removeListener = playGame(x, y);
 });

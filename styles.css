@@ -26,6 +26,11 @@
   justify-content: space-between;
   gap: 40px;
 }
+.error {
+  color: crimson;
+  font-weight: bold;
+  margin-top: 15px;
+}
 .side {
   display: flex;
   flex-direction: column;
