@@ -5,6 +5,13 @@ const playGame = function(x, y) { // x, y - board size
   scoreMoves.innerHTML = "0";
   scoreApples.innerHTML = "0";
 
+  // assets
+  const audio = {
+    die: new Audio('./assets/you died.mp4')
+  };
+  audio.die.volume = 0.4;
+  let finishing = document.getElementById('finishing');
+
   // adjust board size
   game.style.gridTemplateColumns = `repeat(${x}, 1fr)`;
   game.style.gridTemplateRows = `repeat(${y}, 1fr)`;
@@ -89,7 +96,9 @@ const playGame = function(x, y) { // x, y - board size
     let alive = true;
     const checkWhatHappens = function() {
       const youAreDead = function() {
-        alert('dead');
+        audio.die.play();
+        finishing.classList.add("ending");
+        setTimeout(() => finishing.classList.remove("ending"), 9000);
         document.removeEventListener('keydown', mechanics);
         alive = false;
       };
@@ -251,11 +260,11 @@ form.addEventListener('submit', e => {
   let x = form.elements.x.value;
   let y = form.elements.y.value;
   let errorDiv = document.getElementsByClassName('error')[0];
-  if (x === "1" && y === "1") {
-    errorDiv.innerHTML = "The board is too small";
+  if (+x < 5 || y < 5) {
+    errorDiv.innerHTML = "The board is too small (min is 5 x 5)";
     return;
-  } else if (+x > 200 || +y > 200) {
-    errorDiv.innerHTML = "The board is too big (max is 200 x 200)";
+  } else if (+x > 100 || +y > 100) {
+    errorDiv.innerHTML = "The board is too big (max is 100 x 100)";
     return;
   };
   errorDiv.innerHTML = "";

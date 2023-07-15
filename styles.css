@@ -89,3 +89,21 @@ button {
   background-image: url("./assets/body-turn.png");
   background-size: cover;
 }
+@keyframes dying {
+  0% {opacity: 0;}
+  25% {opacity: 1;}
+  90% {opacity: 1;}
+  100% {opacity: 0;}
+}
+.ending {
+  position: absolute;
+  opacity: 0;
+  top: 0px;
+  left: 0px;
+  background-image: url("./assets/you_died.gif");
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  animation-name: dying;
+  animation-duration: 9s;
+}
