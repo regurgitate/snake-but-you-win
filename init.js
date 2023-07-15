@@ -7,9 +7,11 @@ const playGame = function(x, y) { // x, y - board size
 
   // assets
   const audio = {
-    die: new Audio('./assets/you died.mp4')
+    die: new Audio('./assets/you died.mp4'),
+    win: new Audio('./assets/winning.mp4'),
   };
-  audio.die.volume = 0.4;
+  audio.die.volume = 0.4; // die volume does not require additional fade in / out effect
+  audio.win.volume = 0;
   let finishing = document.getElementById('finishing');
 
   // adjust board size
@@ -97,8 +99,8 @@ const playGame = function(x, y) { // x, y - board size
     const checkWhatHappens = function() {
       const youAreDead = function() {
         audio.die.play();
-        finishing.classList.add("ending");
-        setTimeout(() => finishing.classList.remove("ending"), 9000);
+        finishing.classList.add("ending", "die");
+        setTimeout(() => finishing.classList.remove("ending", "die"), 8000);
         document.removeEventListener('keydown', mechanics);
         alive = false;
       };
@@ -114,7 +116,30 @@ const playGame = function(x, y) { // x, y - board size
         scoreApples.innerHTML = ++pointsApples;
         // check if you win
         if (body.length === x * y) {
-          alert('Congratulations, you win');
+          audio.win.play();
+          let interval = setInterval(() => {
+            audio.win.volume += 0.01;
+            if (audio.win.volume >= 0.4) {
+              clearInterval(interval);
+            };
+          }, 50);
+
+          finishing.classList.add("ending", "win");
+          setTimeout(() => {
+            finishing.classList.remove("win");
+            finishing.classList.add("win-going");
+            setTimeout(() => finishing.classList.remove("ending", "win-going"), 11000);
+          }, 9000);
+
+          setTimeout(() => {
+            interval = setInterval(() => {
+              audio.win.volume -= 0.01;
+              if (audio.win.volume <= 0.01) {
+                audio.win.volume = 0;
+                clearInterval(interval);
+              }
+            }, 50);
+          }, 18000);
           document.removeEventListener('keydown', mechanics);
         } else {
           // if you didn't win yet, place an apple in new position
@@ -260,7 +285,7 @@ form.addEventListener('submit', e => {
   let x = form.elements.x.value;
   let y = form.elements.y.value;
   let errorDiv = document.getElementsByClassName('error')[0];
-  if (+x < 5 || y < 5) {
+  if (+x < 5 || y < 5) { // tutej
     errorDiv.innerHTML = "The board is too small (min is 5 x 5)";
     return;
   } else if (+x > 100 || +y > 100) {
