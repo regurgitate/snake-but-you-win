@@ -285,7 +285,7 @@ form.addEventListener('submit', e => {
   let x = form.elements.x.value;
   let y = form.elements.y.value;
   let errorDiv = document.getElementsByClassName('error')[0];
-  if (+x < 5 || y < 5) { // tutej
+  if (+x < 5 || y < 5) {
     errorDiv.innerHTML = "The board is too small (min is 5 x 5)";
     return;
   } else if (+x > 100 || +y > 100) {
